@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#yum -y update
+yum -y update
 yum -y install \
   httpd \
   mysql-server \
@@ -71,3 +71,79 @@ CREATE USER 'root'@'%' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 "
 
+cd ~
+
+curl -sS https://getcomposer.org/installer | php
+chmod +x composer.phar
+mv composer.phar /usr/local/bin/composer
+
+git clone https://github.com/netz98/n98-magerun.git
+cd n98-magerun
+composer install
+cd /usr/local/bin
+ln -s ~/n98-magerun/bin/n98-magerun magerun
+
+echo '
+alias ls="ls -ahF --color=auto"
+alias ll="ls -l"
+alias grep="grep --color=auto"
+dynmotd () {
+  local NONE="\033[0m"    
+
+  # regular colors
+  local K="\033[0;30m"    # black
+  local R="\033[0;31m"    # red
+  local G="\033[0;32m"    # green
+  local Y="\033[0;33m"    # yellow
+  local B="\033[0;34m"    # blue
+  local M="\033[0;35m"    # magenta
+  local C="\033[0;36m"    # cyan
+  local W="\033[0;37m"    # white
+
+  local PROCCOUNT=`ps -l | wc -l`
+  local PROCCOUNT=`expr $PROCCOUNT - 4`
+
+  echo -e "${W}+------------------------------------------------------------------------------+
+| ${W}Hostname:$C       `hostname`
+${W}| ${W}IP Address:$C     `ifconfig | grep -Eo \"inet (addr:)?([0-9]*\.){3}[0-9]*\" | grep -Eo \"([0-9]*\.){3}[0-9]*\" | grep -v \"127.0.0.1\" | xargs`
+${W}| ${W}Uptime:$C         `uptime | sed \"s/.*up \([^,]*\), .*/\1/\" | xargs`
+${W}| ${W}Sessions:$C       `who | grep $USER | wc -l | xargs`
+${W}| ${W}Processes:$C      $PROCCOUNT$NONE"
+}
+
+dynmotd
+unset dynmotd
+
+__cur_dir() {
+    pwd
+}
+
+bash_prompt() {
+  local NONE="\[\033[0m\]"    
+
+  # regular colors
+  local K="\[\033[0;30m\]"    # black
+  local R="\[\033[0;31m\]"    # red
+  local G="\[\033[0;32m\]"    # green
+  local Y="\[\033[0;33m\]"    # yellow
+  local B="\[\033[0;34m\]"    # blue
+  local M="\[\033[0;35m\]"    # magenta
+  local C="\[\033[0;36m\]"    # cyan
+  local W="\[\033[0;37m\]"    # white
+
+  local UC=$W                 
+  [ $UID -eq "0" ] && UC=$R   
+
+  PS1="${W}"
+  USERHOST="$USER@$HOSTNAME"
+  CNT=$(echo $USERHOST | wc -m)
+  CNT=`expr 67 - $CNT`
+  SPACES=$(printf "%${CNT}s" | tr " " "-")
+  PS1="$PS1\n${W}+ $C$USER@$HOSTNAME$W $SPACES $Y\t$W +"
+  PS1="$PS1\n${W}| $G\$(__cur_dir)$NONE"
+  PS1="$PS1\n$NONE\\$ "
+}
+
+bash_prompt
+unset bash_prompt
+' >> /etc/bashrc
