@@ -145,3 +145,19 @@ bash_prompt() {
 bash_prompt
 unset bash_prompt
 ' >> /etc/bashrc
+
+echo '[client]
+user=root
+password=root' >> ~/.my.cnf
+
+echo 'mysql_secure_installation
+
+mysql -e "
+CREATE USER 'root'@'%' IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+"' >> ~/setup_mysql.sh
+
+chmod +x ~/setup_mysql.sh
+
+cd ~
+ln -s /var/www/html
