@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
+cd /tmp/
+curl -o epel-release-7-5.noarch.rpm http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+yum -y install epel-release-7-5.noarch.rpm
+
 yum -y update
 yum -y install \
   httpd \
-  mysql-server \
+  mariadb-server mariadb \
   php \
   php-curl \
   php-devel \
@@ -38,8 +42,6 @@ echo '<VirtualHost *:80>
 
   <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteLog "/var/log/httpd/rewrite.log"
-    RewriteLogLevel 0
 
     RewriteCond   %{HTTP_HOST}                         ^[^.]+\.v0\.steverobbins\.name$
     RewriteRule   ^(.+)                                %{HTTP_HOST}$1                  [C]
@@ -64,24 +66,20 @@ xdebug.profiler_enable_trigger=1
 zend_extension=/usr/lib64/php/modules/xdebug.so' >> /etc/php.ini
 
 service httpd start
-service mysqld start
-
-mysql -e "
-CREATE USER 'root'@'%' IDENTIFIED BY 'root';
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
-"
+service mysqld mariadb
 
 cd ~
 
 curl -sS https://getcomposer.org/installer | php
 chmod +x composer.phar
-mv composer.phar /usr/local/bin/composer
 
 git clone https://github.com/netz98/n98-magerun.git
 cd n98-magerun
-composer install
+php ~/composer.phar install
 cd /usr/local/bin
 ln -s ~/n98-magerun/bin/n98-magerun magerun
+
+mv ~/composer.phar /usr/local/bin/composer
 
 echo '
 alias ls="ls -ahF --color=auto"

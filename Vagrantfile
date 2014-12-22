@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.vm.box       = "chef/centos-6.5"
+  config.vm.box       = "chef/centos-7.0"
   config.vm.host_name = "v0.steverobbins.name"
   
   config.vm.provision     :shell, :path => "bootstrap.sh"
