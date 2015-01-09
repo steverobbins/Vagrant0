@@ -66,7 +66,7 @@ xdebug.profiler_enable_trigger=1
 zend_extension=/usr/lib64/php/modules/xdebug.so' >> /etc/php.ini
 
 service httpd start
-service mysqld mariadb
+service mariadb start
 
 cd ~
 
