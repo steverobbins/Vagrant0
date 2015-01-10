@@ -85,32 +85,6 @@ echo '
 alias ls="ls -ahF --color=auto"
 alias ll="ls -l"
 alias grep="grep --color=auto"
-dynmotd () {
-  local NONE="\033[0m"    
-
-  # regular colors
-  local K="\033[0;30m"    # black
-  local R="\033[0;31m"    # red
-  local G="\033[0;32m"    # green
-  local Y="\033[0;33m"    # yellow
-  local B="\033[0;34m"    # blue
-  local M="\033[0;35m"    # magenta
-  local C="\033[0;36m"    # cyan
-  local W="\033[0;37m"    # white
-
-  local PROCCOUNT=`ps -l | wc -l`
-  local PROCCOUNT=`expr $PROCCOUNT - 4`
-
-  echo -e "${W}+------------------------------------------------------------------------------+
-| ${W}Hostname:$C       `hostname`
-${W}| ${W}IP Address:$C     `ifconfig | grep -Eo \"inet (addr:)?([0-9]*\.){3}[0-9]*\" | grep -Eo \"([0-9]*\.){3}[0-9]*\" | grep -v \"127.0.0.1\" | xargs`
-${W}| ${W}Uptime:$C         `uptime | sed \"s/.*up \([^,]*\), .*/\1/\" | xargs`
-${W}| ${W}Sessions:$C       `who | grep $USER | wc -l | xargs`
-${W}| ${W}Processes:$C      $PROCCOUNT$NONE"
-}
-
-dynmotd
-unset dynmotd
 
 __cur_dir() {
     pwd
@@ -150,12 +124,12 @@ echo '[client]
 user=root
 password=root' >> ~/.my.cnf
 
-echo 'mysql_secure_installation
+echo "mysql_secure_installation
 
-mysql -e "
+mysql -e \"
 CREATE USER 'root'@'%' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
-"' >> ~/setup_mysql.sh
+\"" >> ~/setup_mysql.sh
 
 chmod +x ~/setup_mysql.sh
 
