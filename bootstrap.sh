@@ -69,6 +69,10 @@ CREATE USER 'root'@'%' IDENTIFIED BY 'root';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 "
 
+rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt
+rpm -Uvh http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+yum -y install htop
+
 cd ~
 
 curl -sS https://getcomposer.org/installer | php
