@@ -17,6 +17,7 @@ yum -y install \
   php54w-pdo \
   php54w-pspell \
   php54w-recode \
+  php54w-soap \
   php54w-snmp \
   php54w-tidy \
   php54w-xmlrpc \
