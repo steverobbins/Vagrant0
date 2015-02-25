@@ -17,6 +17,7 @@ yum -y install \
   php54w-pdo \
   php54w-pspell \
   php54w-recode \
+  php54w-pecl-redis \
   php54w-soap \
   php54w-snmp \
   php54w-tidy \
@@ -73,6 +74,13 @@ GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt
 rpm -Uvh http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
 yum -y install htop
+
+rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+yum -y install redis
+
+chkconfig httpd on
+chkconfig mysqld on
 
 cd ~
 
