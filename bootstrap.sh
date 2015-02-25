@@ -82,7 +82,7 @@ mv composer.phar /usr/local/bin/composer
 
 git clone https://github.com/netz98/n98-magerun.git
 cd n98-magerun
-composer install
+/usr/local/bin/composer install
 cd /usr/local/bin
 ln -s ~/n98-magerun/bin/n98-magerun magerun
 
