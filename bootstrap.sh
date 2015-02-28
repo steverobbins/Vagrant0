@@ -12,6 +12,7 @@ yum -y install \
   php54w-intl \
   php54w-pear \
   php54w-imap \
+  php54w-mbstring \
   php54w-mcrypt \
   php54w-mysql \
   php54w-pdo \
@@ -62,6 +63,12 @@ xdebug.remote_port=9000
 xdebug.remote_autostart=1
 xdebug.profiler_enable_trigger=1
 zend_extension=/usr/lib64/php/modules/xdebug.so' >> /etc/php.ini
+
+cd ~
+wget http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+tar -zxvf ioncube_loaders_lin_x86-64.tar.gz
+mv ioncube/ioncube_loader_lin_5.4.so /usr/lib64/php/modules/
+rm -rf ioncube ioncube_loaders_lin_x86-64.tar.gz
 
 service httpd start
 service mysqld start
