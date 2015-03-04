@@ -70,6 +70,17 @@ tar -zxvf ioncube_loaders_lin_x86-64.tar.gz
 mv ioncube/ioncube_loader_lin_5.4.so /usr/lib64/php/modules/
 rm -rf ioncube ioncube_loaders_lin_x86-64.tar.gz
 
+sed -i '2i\\
+zend_extension=/usr/lib64/php/modules/ioncube_loader_lin_5.4.so' /etc/php.ini
+
+sed -i "883i\\
+date.timezone = 'America/Los_Angeles'" /etc/php.ini
+
+sed -i '7i\\
+max_allowed_packet=1G
+innodb_log_buffer_size=1G
+innodb_file_per_table' /etc/my.cnf
+
 service httpd start
 service mysqld start
 
@@ -85,6 +96,9 @@ yum -y install htop
 rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
 yum -y install redis
+
+echo 'redis-server /etc/redis.conf' >> /etc/rc.d/rc.local
+redis-server /etc/redis.conf
 
 chkconfig httpd on
 chkconfig mysqld on
