@@ -37,14 +37,14 @@ echo '<VirtualHost *:80>
   DirectoryIndex index.php index.html index.htm
   UseCanonicalName off
   AddType application/x-httpd-php .php
-  ServerName v0.steverobbins.name
+  ServerName v0.ldev.io
   <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteLog "/var/log/httpd/rewrite.log"
     RewriteLogLevel 0
-    RewriteCond   %{HTTP_HOST}                         ^[^.]+\.v0\.steverobbins\.name$
+    RewriteCond   %{HTTP_HOST}                         ^[^.]+\.v0\.ldev\.io$
     RewriteRule   ^(.+)                                %{HTTP_HOST}$1                  [C]
-    RewriteRule   ^([^.]+)\.v0\.steverobbins\.name(.*) /var/www/html/$1/$2             [L]
+    RewriteRule   ^([^.]+)\.v0\.ldev\.io(.*) /var/www/html/$1/$2             [L]
   </IfModule>
 </VirtualHost>
 ' > /etc/httpd/conf.d/vhost.conf
@@ -146,4 +146,6 @@ bash_prompt() {
 }
 bash_prompt
 unset bash_prompt
+
+alias magerun="magerun --ansi"
 ' >> /etc/bashrc

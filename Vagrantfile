@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
   config.vm.box       = "chef/centos-6.5"
-  config.vm.host_name = "v0.steverobbins.name"
+  config.vm.host_name = "v0.ldev.io"
   
   config.vm.provision     :shell, :path => "bootstrap.sh"
   config.vm.network       :forwarded_port, guest: 80, host: 8081
@@ -15,6 +15,6 @@ Vagrant.configure("2") do |config|
         "modifyvm", :id,
         "--memory", "4096",
     ]
-    vb.name = "v0.steverobbins.name"
+    vb.name = "v0.ldev.io"
   end
 end
