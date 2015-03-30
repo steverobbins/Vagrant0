@@ -2,12 +2,12 @@ Vagrant Box 0
 ===
 
 * IP Address: 192.168.50.100
-* Hostname:   *.v0.ldev.io
+* Hostname:   192.168.50.100.xip.io
 
 This box uses rewrites to dynamically serve the document root.  I.e:
 
-* foo.v0.ldev.io -> /var/www/html/foo
-* bar.v0.ldev.io -> /var/www/html/bar
+* foo.192.168.50.100.xip.io -> /var/www/html/foo
+* bar.192.168.50.100.xip.io -> /var/www/html/bar
 
 etc.  No additional configurations or service restarts needed.
 

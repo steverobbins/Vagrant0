@@ -37,14 +37,14 @@ echo '<VirtualHost *:80>
   DirectoryIndex index.php index.html index.htm
   UseCanonicalName off
   AddType application/x-httpd-php .php
-  ServerName v0.ldev.io
+  ServerName 192.168.50.100.xip.io
   <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteLog "/var/log/httpd/rewrite.log"
     RewriteLogLevel 0
-    RewriteCond   %{HTTP_HOST}                         ^[^.]+\.v0\.ldev\.io$
-    RewriteRule   ^(.+)                                %{HTTP_HOST}$1                  [C]
-    RewriteRule   ^([^.]+)\.v0\.ldev\.io(.*) /var/www/html/$1/$2             [L]
+    RewriteCond   %{HTTP_HOST}                         ^[^.]+\.192\.168\.50\.100\.xip\.io$
+    RewriteRule   ^(.+)                                %{HTTP_HOST}$1          [C]
+    RewriteRule   ^([^.]+)\.192\.168\.50\.100\.xip\.io(.*) /var/www/html/$1/$2 [L]
   </IfModule>
 </VirtualHost>
 ' > /etc/httpd/conf.d/vhost.conf
