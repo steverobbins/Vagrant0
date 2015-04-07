@@ -11,7 +11,17 @@ This box uses rewrites to dynamically serve the document root.  I.e:
 
 etc.  No additional configurations or service restarts needed.
 
-# Installation:
+# What you get
+
+* CentOS 6.5
+* Apache 2.2.15
+* MySQL 5.1.73
+* PHP 5.4
+  * ionCube Loader 4.7.5
+  * Xdebug 2.3.2
+* Redis 2.4.10
+
+# Installation
 
 ```
 mkdir ~/Project
